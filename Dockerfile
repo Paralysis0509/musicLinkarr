@@ -1,10 +1,11 @@
 FROM alpine:3.19
 
-# Added 'py3-gunicorn' and 'findutils' (from our previous fix)
+# Added imagemagick-jpeg and imagemagick-png for image format support
 RUN apk add --no-cache \
     bash \
     flac \
     imagemagick \
+    imagemagick-jpeg \
     jq \
     curl \
     file \
