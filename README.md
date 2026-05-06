@@ -50,7 +50,8 @@ Add the following to your `docker-compose.yml`. Make sure your volume paths exac
 ```yaml
 services:
   musiclinkarr:
-    build: . # Or the path to the MusicLinkarr folder
+    image: paralysis0509/musiclinkarr:latest
+    #build: . # Or the path to the musiclinkarr folder, if you pull from github
     container_name: musiclinkarr
     restart: unless-stopped
     ports:
