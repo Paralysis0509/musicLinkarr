@@ -107,11 +107,6 @@ extract_embedded_cover() {
     local audio="$1"
     local out="$2"
 
-    # Try ffmpeg first
-    if ffmpeg -loglevel error -y -i "$audio" -map 0:v -c copy "$out" 2>/dev/null; then
-        return 0
-    fi
-
     # Fallback to metaflac
     if [[ -n "$(metaflac --list --block-type=PICTURE "$audio" 2>/dev/null)" ]]; then
         log "Extracting embedded cover using metaflac"
@@ -255,7 +250,7 @@ if [ "$DEBUG" = true ]; then
 fi
 
 # Ensure all required tools are installed
-for cmd in metaflac curl jq ffmpeg magick file; do
+for cmd in metaflac curl jq magick file; do
     if ! command -v "$cmd" &> /dev/null; then
         error "'$cmd' could not be found. Please install it."
         exit 1
