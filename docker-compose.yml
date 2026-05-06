@@ -1,0 +1,17 @@
+services:
+  musiclinkarr:
+    build: . # Or the path to the MusicLinkarr folder
+    container_name: musiclinkarr
+    restart: unless-stopped
+    ports:
+      - "8585:8585"
+    volumes:
+      # Mount the common parent directory
+      - /path/to/your/local/data:/data
+      # (Optional) Map the internal /log folder to your host to keep persistent logs
+      #- /path/to/your/local/logs:/log
+    environment:
+      - SRC_BASE=/data/torrents/music   # Where your downloads land
+      - DEST_BASE=/data/media/music     # Where your organized music goes
+      - WATCHED_CATEGORY=music          # The qBittorrent category to listen for
+      - ENABLE_API=true                 # Keep true to allow qBittorrent to trigger it, false for daily bulk scan only
