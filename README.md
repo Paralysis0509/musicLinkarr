@@ -61,6 +61,8 @@ services:
       # (Optional) Map the internal /log folder to your host to keep persistent logs
       - /path/to/your/local/logs:/log
     environment:
+      - PUID=1000                       # Replace with your host user ID
+      - PGID=1000                       # Replace with your host group ID
       - SRC_BASE=/data/torrents/music   # Where your downloads land
       - DEST_BASE=/data/media/music     # Where your organized music goes
       - WATCHED_CATEGORY=music          # The qBittorrent category to listen for
@@ -99,10 +101,11 @@ curl -X POST --data-urlencode "path=%F" --data-urlencode "category=%L" http://mu
 ### Method 2: Daily Cron Job (Bulk Scan)
 If you prefer not to use the API, or want to catch folders you moved manually, you can run a bulk scan. When triggered without arguments, MusicLinkarr automatically scans `SRC_BASE` for any folders that were modified **in the last 48 hours** to ensure no files are missed.
 
-Add this to your host machine's crontab (`crontab -e`) to run it every night at 3:00 AM:
+Add this to your host machine's crontab (`crontab -e`) to run it every night at 3:00 AM (user musicapp to take UPUID and PGID into account):
 ```bash
-0 3 * * * docker exec musiclinkarr /app/musicLinkarr.sh
+0 3 * * * docker exec -u musicapp musiclinkarr /app/musicLinkarr.sh
 ```
+(user musicapp to take UPUID and PGID into account)
 
 ### Method 3: Manual Execution
 Need to process a specific folder manually? You can execute the script directly inside the container and pass the exact path you want to process:

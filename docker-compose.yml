@@ -11,6 +11,8 @@ services:
       # (Optional) Map the internal /log folder to your host to keep persistent logs
       #- /path/to/your/local/logs:/log
     environment:
+      - PUID=1000                       # Replace with your host user ID
+      - PGID=1000                       # Replace with your host group ID
       - SRC_BASE=/data/torrents/music   # Where your downloads land
       - DEST_BASE=/data/media/music     # Where your organized music goes
       - WATCHED_CATEGORY=music          # The qBittorrent category to listen for

@@ -12,7 +12,8 @@ RUN apk add --no-cache \
     python3 \
     py3-flask \
     py3-gunicorn \
-    findutils
+    findutils \
+    su-exec
 
 WORKDIR /app
 RUN mkdir -p /log
