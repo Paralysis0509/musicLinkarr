@@ -25,16 +25,16 @@ For MusicLinkarr to work its magic without duplicating data, **Hardlinks must be
 
 Hardlinks cannot cross different hard drives, and in Docker, they cannot cross different volume mounts. You **must** mount a single, common parent directory to both your torrent client and MusicLinkarr. 
 
-📚 *If you are unfamiliar with this concept, it is highly recommended to read the [TRASH Guides on Hardlinks and Instant Moves](https://trash-guides.info/File-and-Folder-Structure/Hardlinks-and-Instant-Moves/).*
+*If you are unfamiliar with this concept, it is highly recommended to read the [TRASH Guides on Hardlinks and Instant Moves](https://trash-guides.info/File-and-Folder-Structure/Hardlinks-and-Instant-Moves/).*
 
-** Bad Docker Volume Setup (Hardlinks will fail):**
+**Bad Docker Volume Setup (Hardlinks will fail):**
 ```yaml
 volumes:
   - /data/torrents:/torrents
   - /data/media:/media
 ```
 
-** Good Docker Volume Setup (Hardlinks will work):**
+**Good Docker Volume Setup (Hardlinks will work):**
 ```yaml
 volumes:
   - /data:/data
