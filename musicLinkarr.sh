@@ -282,7 +282,7 @@ find "${FIND_ARGS[@]}" -print0 | while IFS= read -r -d '' DIR; do
     flac_files=()
     while IFS= read -r -d '' file; do
         flac_files+=("$file")
-    done < <(find "$DIR" -type f -name "*.flac" -print0)
+    done < <(find "$DIR" -maxdepth 1 -type f -name "*.flac" -print0)
     # Skip if no FLACs
     if [ ${#flac_files[@]} -eq 0 ]; then
         continue
