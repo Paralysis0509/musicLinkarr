@@ -13,7 +13,7 @@ error() {
 # -----------------------------------------------------------------------------
 # Configuration
 # -----------------------------------------------------------------------------
-LOG_FILE="/log/musicLinkarr_$(date +%Y%m%d).log"
+LOG_FILE="/config/log/musicLinkarr_$(date +%Y%m%d).log"
 
 # Set to false to actually execute file operations
 if [ -z "$DEBUG" ]; then

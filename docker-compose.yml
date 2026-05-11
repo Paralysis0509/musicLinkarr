@@ -8,8 +8,7 @@ services:
     volumes:
       # Mount the common parent directory
       - /path/to/your/local/data:/data
-      # (Optional) Map the internal /log folder to your host to keep persistent logs
-      #- /path/to/your/local/logs:/log
+      - /path/to/your/local/config:/config
     environment:
       - PUID=1000                       # Replace with your host user ID
       - PGID=1000                       # Replace with your host group ID

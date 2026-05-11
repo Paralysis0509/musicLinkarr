@@ -59,8 +59,7 @@ services:
     volumes:
       # Mount the common parent directory
       - /path/to/your/local/data:/data
-      # (Optional) Map the internal /log folder to your host to keep persistent logs
-      - /path/to/your/local/logs:/log
+      - /path/to/your/local/config:/config # Stores API key and persistent logs
     environment:
       - PUID=1000                       # Replace with your host user ID
       - PGID=1000                       # Replace with your host group ID
@@ -77,6 +76,7 @@ services:
 | `SRC_BASE` | Yes | *None* | The root folder where your torrents are downloaded. |
 | `DEST_BASE` | Yes | *None* | The root folder where your organized Artists/Albums will be linked. |
 | `WATCHED_CATEGORY` | No | `music` | The API will ignore any triggers that menttion a different category. |
+| `API_KEY` | No | *Auto* | Forces a specific API key. If left blank, one is generated in `/config/api_key.txt`. |
 | `ENABLE_API` | No | `true` | Set to `false` to disable the web server (container will sleep for cron jobs). |
 
 ---
@@ -88,13 +88,16 @@ MusicLinkarr can be triggered in three different ways depending on your needs.
 ### Method 1: Instant Trigger via qBittorrent (Recommended)
 You can tell qBittorrent to ping MusicLinkarr's API the exact second a download finishes.
 
+**Finding your API Key:**
+On first run, check your container logs (`docker logs musiclinkarr`). The system will generate a robust API key and print it clearly in the console. It will also be saved to `/config/api_key.txt`.
+
 1. Open your qBittorrent Web UI.
 2. Go to **Settings -> Downloads**.
 3. Scroll down to **Run external program on torrent completion**.
 4. Check the box and paste the following command:
 
 ```bash
-curl -X POST --data-urlencode "path=%F" --data-urlencode "category=%L" http://musiclinkarr:8585/process
+curl -X POST -H "Authorization: Bearer YOUR_API_KEY_HERE" --data-urlencode "path=%F" --data-urlencode "category=%L" http://musiclinkarr:8585/process
 ```
 
 * **Note on VPNs/Gluetun:** If your qBittorrent is routed through a VPN container like Gluetun, it might not be able to resolve `http://musiclinkarr`. Replace `musiclinkarr` with your host machine's local IP (e.g., `192.168.1.50`), and ensure you have added your local subnet to Gluetun's `FIREWALL_OUTBOUND_SUBNETS` variable (e.g., `192.168.1.0/24`, or even `192.168.1.50/32` if you're extra cautious).

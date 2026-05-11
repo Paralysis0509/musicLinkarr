@@ -10,9 +10,12 @@ echo "[INFO] Configuring user context (PUID: $PUID, PGID: $PGID)..."
 addgroup -g "$PGID" musicapp 2>/dev/null || true
 adduser -u "$PUID" -G musicapp -s /bin/sh -D musicapp 2>/dev/null || true
 
+# Ensure the log directory exists within the config mount
+mkdir -p /config/log
+
 # 3. Fix permissions so our new user can write logs and access the app
-chown -R musicapp:musicapp /log
 chown -R musicapp:musicapp /app
+chown -R musicapp:musicapp /config
 
 # 4. Start the requested process, using su-exec to drop root privileges
 API_STATUS="${ENABLE_API:-true}"

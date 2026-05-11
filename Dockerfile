@@ -16,7 +16,7 @@ RUN apk add --no-cache \
     su-exec
 
 WORKDIR /app
-RUN mkdir -p /log
+RUN mkdir -p /config
 
 COPY musicLinkarr.sh .
 COPY server.py .
